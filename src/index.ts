@@ -1,10 +1,12 @@
-import {getOutages, getSiteInfo} from "./client.js";
-import { SITE_ID } from "./config.js";
+import { OUTAGE_DATE } from "./config.js";
 import 'dotenv/config'
+import {filterOutages} from "./filter.js";
 
 async function main() {
-    const siteInfo = await getSiteInfo(SITE_ID);
-    console.log(siteInfo)
+    const filteredOutages = await filterOutages(OUTAGE_DATE);
+    for (const outage of filteredOutages) {
+        console.log(outage);
+    }
 }
 
 main();
