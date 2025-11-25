@@ -11,9 +11,9 @@
     "target": "esnext",
     "types": [],
     // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+     "lib": ["es2022"],
+     "types": ["node"],
+//     and npm install -D @types/node
 
     // Other Outputs
     "sourceMap": true,
@@ -34,7 +34,6 @@
 
     // Recommended Options
     "strict": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
