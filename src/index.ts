@@ -11,7 +11,7 @@ async function main() {
     const processedOutages = processOutages(filteredOutages, siteInfo);
     const postResponse = await sendOutages(processedOutages, SITE_ID);
 
-    console.log(`Sending ${processedOutages.length} processed outages…`);
+    console.log(`Sending ${processedOutages.length} processed outages...`);
 
     if (postResponse.status === 200) {
         console.log("Successfully sent processed outages to the Kraken endpoint");
