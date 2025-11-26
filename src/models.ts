@@ -4,6 +4,10 @@ export interface Outage {
     end: string;
 }
 
+export interface OutageWithDeviceName extends Outage {
+    name: string;
+}
+
 export interface SiteInfo {
     id: string;
     name: string;

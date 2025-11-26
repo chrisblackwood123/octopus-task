@@ -1,6 +1,6 @@
-import type {Outage, SiteInfo} from "./models.js";
+import type {Outage, OutageWithDeviceName, SiteInfo} from "./models.js";
 
-export function processOutages(outages: Outage[], siteInfo: SiteInfo): Outage[] {
+export function processOutages(outages: Outage[], siteInfo: SiteInfo): OutageWithDeviceName[] {
     if (!outages || outages.length === 0) return [];
     if (!siteInfo || !siteInfo.devices || siteInfo.devices.length === 0) return [];
 
