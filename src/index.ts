@@ -9,7 +9,6 @@ async function main() {
     const siteInfo = await getSiteInfo(SITE_ID);
     const outages = await getOutages();
     const filteredOutages = filterOutages(outages, OUTAGE_DATE, siteInfo);
-    console.log(processOutages(filteredOutages, siteInfo));
 }
 
 main();
