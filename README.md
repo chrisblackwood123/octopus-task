@@ -1,34 +1,45 @@
-# KrakenFlex Back End Test
+# KrakenFlex Outage Processing Task
 
-## Introduction
+## Description
 
-This test is designed to help you showcase your back end engineering skills. We are interested to see how you work and
-what your thought process is, there is no single correct way to complete the task.
+This project implements the Kraken Flex interview task.
+The application retrieves outage data and site information from the Kraken Flex API, filters and processes the data
+according to the task specification (detailed below), and then posts the processed outages back onto the API.
+The solution includes unit test coverage of the pure functions, retries on backend 500 errors, and a clear modular
+architecture.
 
-## The Task
+## Installation
 
-You should have been provided an API key and a Swagger specification defining endpoints in a file called `api.yaml`.
-Don't worry if you haven't used Swagger before, it's just a standard way to document APIs. You can view the file by going
-to [https://editor.swagger.io/](https://editor.swagger.io/) and pasting the contents of `api.yaml` into the panel on the
-left.
+### 1. Clone the repository
+```bash
+git clone <GIT REPO URL>
+cd <repo>
+```
+### 2. Install dependencies
+```bash
+npm install
+```
+### 3. Environment variables
+Create a .env file
+```bash
+API_KEY=<API-KEY>
+BASE_URL=https://api.krakenflex.systems/interview-tests-mock-api/v1
+SITE_ID=norwich-pear-tree
+OUTAGE_DATE=2022-01-01T00:00:00.000Z
+```
 
-There are three endpoints in this file:
+## Usage
+The following command will run the program:
+```bash
+npm start
+```
+And produce an output similar to this:
+```bash
+Sending 10 processed outages
+Successfully sent processed outages to the Kraken endpoint
+```
 
-1. `GET /outages` which returns all outages in our system
-2. `GET /site-info/{siteId}` which returns specific information about a site
-3. `POST /site-outages/{siteId}` which expects outages for a specific site to be posted to it
-
-Your task is to write a small program that:
-
-1. Retrieves all outages from the `GET /outages` endpoint
-2. Retrieves information from the `GET /site-info/{siteId}` endpoint for the site with the ID `norwich-pear-tree`
-3. Filters out any outages that began before `2022-01-01T00:00:00.000Z` or don't have an ID that is in the list of
-   devices in the site information
-4. For the remaining outages, it should attach the display name of the device in the site information to each appropriate outage
-5. Sends this list of outages to `POST /site-outages/{siteId}` for the site with the ID `norwich-pear-tree`
-
-
-### Example
+## Tech Specification
 
 Let's assume we want to do this for the site `kingfisher`.
 
@@ -113,31 +124,9 @@ We should send the following to `POST /site-outages/kingfisher`:
 ]
 ```
 
-### Requirements
+## AI Usage Disclosure
 
-We would like you to produce:
+I used ChatGPT for the following uses:
 
-* A small program that solves the problem mentioned above
-* A suite of appropriate unit tests
-* A `README.md` file that documents what you have produced and explains how to run the program and tests (including installing any dependencies)
-
-* Once you have a complete solution, please commit into a git repo that can be accessed by Kraken Flex. Email your recruitment contact with a link to this repository so that your suubmission can be reviewed. 
-
-Thank you. 
-
-### Bonus Requirements
-
-* The API will occasionally return 500 status codes. Can you implement a solution that is resilient to this scenario?
-
-### Tips and Things to Note
-
-* Make sure to include the provided API key in each request that you send. For example, run the following to test
-  this out:
-  ```bash
-  curl https://api.krakenflex.systems/interview-tests-mock-api/v1/outages -H "x-api-key: <API KEY>"
-  ```
-* Each endpoint has the base path `https://api.krakenflex.systems/interview-tests-mock-api/v1/`.
-* If you are unsure of the schemas required, take a look at the `api.yaml` provided.
-* You will only get a 200 success response from `POST /site-outages/{siteId}` if the payload is correct.
-
-**Good luck!**
+1. As a PR reviewer
+2. Assistance with the retry function
