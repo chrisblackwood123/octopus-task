@@ -2,7 +2,6 @@ import { OUTAGE_DATE, SITE_ID } from "./config.js";
 import 'dotenv/config'
 import {filterOutages} from "./filter.js";
 import {getOutages, getSiteInfo, sendOutages} from "./client.js";
-import * as console from "node:console";
 import {processOutages} from "./service.js";
 
 async function main() {
@@ -12,7 +11,7 @@ async function main() {
     const processedOutages = processOutages(filteredOutages, siteInfo);
     const postResponse = await sendOutages(processedOutages, SITE_ID);
 
-    console.log("Processed outages: ", processedOutages);
+    console.log(`Sending ${processedOutages.length} processed outages…`);
 
     if (postResponse.status === 200) {
         console.log("Successfully sent processed outages to the Kraken endpoint");

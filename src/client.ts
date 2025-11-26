@@ -2,44 +2,51 @@ import axios, {type AxiosResponse} from "axios";
 import type {Outage, SiteInfo} from "./models.js";
 import { API_KEY, BASE_URL } from "./config.js";
 
-export async function getOutages(): Promise<Outage[]> {
-    try {
-        const response = await axios.get(`${BASE_URL}/outages`, {
-            headers: { "x-api-key": API_KEY}
-        });
-        return response.data;
-    } catch (err: any) {
-        const status = err?.response?.status;
-        console.error("Failed to get outages:", status);
-        throw err;
+async function retryRequest<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
+    let lastError;
+
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            return await fn();
+        } catch (err: any) {
+            const status = err?.response?.status;
+
+            if (!status || status == 500 && status < 600) {
+                lastError = err;
+                continue;
+            }
+
+            throw err;
+        }
     }
+
+    throw lastError ?? new Error("Request failed after retries");
+}
+
+export async function getOutages(): Promise<Outage[]> {
+    return retryRequest(async () => {
+        const res = await axios.get(`${BASE_URL}/outages`, {
+            headers: { "x-api-key": API_KEY }
+        });
+        return res.data;
+    });
 }
 
 export async function getSiteInfo(siteId: string): Promise<SiteInfo> {
-    try {
-        const response = await axios.get(`${BASE_URL}/site-info/${siteId}`, {
-            headers: { "x-api-key": API_KEY}
+    return retryRequest(async () => {
+        const res = await axios.get(`${BASE_URL}/site-info/${siteId}`, {
+            headers: { "x-api-key": API_KEY }
         });
-        return response.data;
-    } catch (err: any) {
-        const status = err?.response?.status;
-        console.error("Failed to get site info: ", status);
-        throw err;
-    }
+        return res.data;
+    });
 }
 
-export async function sendOutages(outages: Outage[], siteId: string): Promise<AxiosResponse<any>> {
-    try {
+export async function sendOutages(outages: Outage[], siteId: string) {
+    return retryRequest(async () => {
         return await axios.post(
             `${BASE_URL}/site-outages/${siteId}`,
             outages,
-            {
-                headers: { "x-api-key": API_KEY }
-            }
+            { headers: { "x-api-key": API_KEY } }
         );
-    } catch (err: any) {
-        const status = err?.response?.status;
-        console.error("Failed to send outages", status);
-        throw err;
-    }
+    });
 }
