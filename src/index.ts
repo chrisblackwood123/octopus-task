@@ -10,6 +10,11 @@ async function main() {
     const filteredOutages = filterOutages(outages, OUTAGE_DATE, siteInfo);
     const processedOutages = processOutages(filteredOutages, siteInfo);
 
+    if (processedOutages.length === 0) {
+        console.log("No outages to send. Exiting application");
+        return
+    }
+
     console.log(`Sending ${processedOutages.length} processed outages...`);
 
     const postResponse = await sendOutages(processedOutages, SITE_ID);
