@@ -130,3 +130,11 @@ I used ChatGPT for the following uses:
 
 1. As a PR reviewer
 2. Assistance with the retry function
+
+## If I Had More Time
+
+1. Mocked Axios tests: To validate full request/response pipeline
+2. A runner class instead of running the entire functionality in index.ts: So that index.ts becomes a thinner entrypoint
+and the orchestration logic can be properly unit tested.
+3. More configurable retry functionality: Retry count, backoff strategy, retryable status codes, set via environment variables
+4. Date validation and more integral error handling/logging: To handle unexpected or malformed API data
