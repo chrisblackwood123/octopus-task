@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "test": "vitest"
+  },
   "devDependencies": {
     "@types/node": "^24.10.1",
     "typescript": "^5.9.3",

@@ -37,7 +37,15 @@ And produce an output similar to this:
 ```bash
 Sending 10 processed outages
 Successfully sent processed outages to the Kraken endpoint
+
 ```
+
+## Testing
+The following command will run the test:
+```bash
+npm test
+```
+
 
 ## Tech Specification
 
@@ -137,4 +145,4 @@ I used ChatGPT for the following uses:
 2. A runner class instead of running the entire functionality in index.ts: So that index.ts becomes a thinner entrypoint
 and the orchestration logic can be properly unit tested.
 3. More configurable retry functionality: Retry count, backoff strategy, retryable status codes, set via environment variables
-4. Date validation and more integral error handling/logging: To handle unexpected or malformed API data
+4. Date validation and better error handling/logging: To handle unexpected or malformed API data
