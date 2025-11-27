@@ -11,7 +11,7 @@ async function retryRequest<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
         } catch (err: any) {
             const status = err?.response?.status;
 
-            if (!status || (status == 500 && status < 600)) {
+            if (!status || (status >= 500 && status < 600)) {
                 lastError = err;
                 continue;
             }
