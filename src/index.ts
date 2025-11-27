@@ -9,9 +9,15 @@ async function main() {
     const outages = await getOutages();
     const filteredOutages = filterOutages(outages, OUTAGE_DATE, siteInfo);
     const processedOutages = processOutages(filteredOutages, siteInfo);
-    const postResponse = await sendOutages(processedOutages, SITE_ID);
+
+    if (processedOutages.length === 0) {
+        console.log("No outages to send. Exiting application");
+        return
+    }
 
     console.log(`Sending ${processedOutages.length} processed outages...`);
+
+    const postResponse = await sendOutages(processedOutages, SITE_ID);
 
     if (postResponse.status === 200) {
         console.log("Successfully sent processed outages to the Kraken endpoint");
