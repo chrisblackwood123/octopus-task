@@ -43,7 +43,7 @@ Successfully sent processed outages to the Kraken endpoint
 ## Testing
 The following command will run the test:
 ```bash
-npm tests
+npm test
 ```
 
 
